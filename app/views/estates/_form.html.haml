@@ -1,0 +1,25 @@
+#inputForm
+  = form_for @estate do |f|
+    .form
+      #country
+      = f.label "Описание(квартира, дом, комната)"
+      = f.select :title,[['дом'],["квартира"],["комната"]], { :include_blank => '-- Выберите тип --' }, :required => true
+      = f.label "Страна"
+      = f.autocomplete_field :country, autocomplete_estate_country_estates_path , required: 'required'
+      = f.label "Город"
+      = f.autocomplete_field :city, autocomplete_estate_city_estates_path , required: 'required'
+      = f.label "Район"
+      = f.autocomplete_field :district, autocomplete_estate_district_estates_path , required: 'required'
+      = f.label "Улица"
+      = f.autocomplete_field :street, autocomplete_estate_street_estates_path , required: 'required'
+      = f.label "Дом"
+      = f.text_field :house, required: 'required'
+      = f.label "Квартира"  
+      = f.text_field :flat
+      = f.label "Площадь,м2"
+      = f.text_field :area, required: 'required'
+      = f.label "Цена,$"  
+      = f.text_field :price, required: 'required'
+      = f.label "Фото"
+      = f.file_field :photo
+      = f.submit "отправить", class: "button radius tiny"

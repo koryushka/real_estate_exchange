@@ -1,0 +1,5 @@
+$("#estates").html("#{escape_javascript ( render('estates')) }")
+
+-if !params[:q].blank?
+  $("#s").html("#{escape_javascript ( 'Результаты поиска') }")
+  $("#f").html("#{escape_javascript (render text: ( "Найдено: #{@estates.count}") ) }" )

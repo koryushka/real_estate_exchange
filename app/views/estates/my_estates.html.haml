@@ -1,0 +1,27 @@
+= will_paginate @estates, renderer: FoundationPagination::Rails
+-@estates.each do |e|
+  .panel
+    %h5
+      %small 
+        Добавлено #{e.updated_at.to_s(:created_at_estate_time)}
+    - if !e.photo.blank?
+      %ul.clearing-thumbs.right.estate-img{"data-clearing" => ""}
+        %li.glow
+          %a.th.th-item{href: e.photo.url, style:"background-image: url(#{e.photo.url(:thumb)});height: 200px;width: 200px;overflow: hidden;background-position: center;background-repeat: no-repeat;"}
+            %img{ src: e.photo.url(:thumb), style:"opacity:0;"}
+    %p
+      %b Страна:
+      = e.country
+    %p 
+      %b Город:
+      = e.city
+    %p 
+      %b Цена, $:
+      = e.price  
+    = link_to 'Подробнее', estate_path(id: e.id)  
+
+    - if user_signed_in? && e.user_id == current_user.id
+      %hr
+      #link_to_delete
+        = link_to "Удалить", {controller: :estates, action: :destroy, id: e.id, user_id: current_user.id}, method: :delete, data:{confirm:"Delete?"}
+= will_paginate @estates, renderer: FoundationPagination::Rails    

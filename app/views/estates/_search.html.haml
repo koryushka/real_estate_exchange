@@ -1,0 +1,13 @@
+#searchForm
+  = search_form_for @search,  remote: true, url: estates_path, method: :get do |f|
+    = f.select :country_eq, options_for_select(@countries.collect{|p| p }),include_blank: true,prompt:"Страна"
+    = f.autocomplete_field :city_cont, autocomplete_estate_city_estates_path, placeholder:"Город"
+    = f.autocomplete_field :district_cont, autocomplete_estate_district_estates_path, placeholder:"Район"
+    = f.autocomplete_field :street_cont, autocomplete_estate_street_estates_path, placeholder:"Улица"  
+    = f.text_field :price_gteq,placeholder: "Цена, от $"
+    = f.text_field :price_lteq,placeholder: "Цена, до $"
+    = f.text_field :area_gteq,placeholder: "Площадь, от м2"
+    = f.text_field :area_lteq,placeholder: "Площадь, до м2"
+    = f.select :title_eq, [["квартира"],["дом"],["комната"]],include_blank: true, prompt:"тип"
+    = f.submit 'Поиск', class: "button tiny"
+    = f.submit "сброс", type: "reset"

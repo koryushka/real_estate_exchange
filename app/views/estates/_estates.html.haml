@@ -1,0 +1,64 @@
+= foundation_paginate @estates
+Параметры сортировки:
+= sort_link @search, :area, "Площадь", {}, { :remote => true, :method => :get } 
+= sort_link @search, :price, "Цена", {}, { :remote => true, :method => :get } 
+-@estates.each do |e|
+  .panel
+    %h5
+      %small 
+        Добавлено #{e.updated_at.to_s(:created_at_estate_time)}
+    - if !e.photo.blank?
+      %ul.clearing-thumbs.right.estate-img{"data-clearing" => ""}
+        %li.glow
+          %a.th.th-item{href: e.photo.url, style:"background-image: url(#{e.photo.url(:thumb)});height: 200px;width: 200px;overflow: hidden;background-position: center;background-repeat: no-repeat;"}
+            %img{ src: e.photo.url(:thumb), style:"opacity:0;"}
+    %p
+      %b Страна:
+      = (params[:q] ? highlight(e.country,params[:q][:country_eq]) : e.country) 
+    %p      
+      %b Описание:
+      = (params[:q] ? highlight(e.title,params[:q][:title_eq]) : e.title) 
+    %p 
+      %b Город:
+      = (params[:q] ? highlight(e.city,params[:q][:city_cont]) : e.city) 
+    %p 
+      %b Район:
+      = (params[:q] ? highlight(e.district,params[:q][:district_cont]) : e.district) 
+    %p   
+      %b Улица:
+      = (params[:q] ? highlight(e.street,params[:q][:street_cont]) : e.street) 
+    %p 
+      %b Дом:
+      = (params[:q] ? highlight(e.house,params[:q][:house_cont]) : e.house) 
+    %p 
+      %b Квартира: 
+      = e.flat  
+    %p 
+      %b Площадь,м2:
+      -if params[:q]
+        -if params[:q][:area_gteq] || params[:q][:area_lteq]
+          = highlight(e.area.to_s,e.area.to_s)
+        - else
+          = e.area  
+      -else
+        = e.area 
+    %p 
+      %b Цена, $:
+      -if params[:q]
+        -if params[:q][:price_gteq] || params[:q][:price_lteq]
+          = highlight(e.price.to_s,e.price.to_s)
+        - else
+          = e.price  
+      -else
+        = e.price  
+
+    %p
+      %b User_id
+      = e.user_id  
+    = link_to 'Подробнее', estate_path(id: e.id)  
+
+    - if user_signed_in? && e.user_id == current_user.id
+      %hr
+      #link_to_delete
+        = link_to "Удалить", {controller: :estates, action: :destroy, id: e.id, user_id: current_user.id}, method: :delete, data:{confirm:"Delete?"}
+= foundation_paginate @estates   

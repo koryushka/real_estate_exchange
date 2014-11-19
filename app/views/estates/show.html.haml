@@ -1,0 +1,42 @@
+.panel
+  - if !@estate.photo.blank?
+    %ul.clearing-thumbs.right{"data-clearing" => ""}
+      %li.glow
+        %a.th.th-item{href: @estate.photo.url, style:"background-image: url(#{@estate.photo.url(:thumb)});height: 200px;width: 200px;overflow: hidden;background-position: center;background-repeat: no-repeat;"}
+          %img{ src: @estate.photo.url(:thumb), style:"opacity:0;"}
+  %p
+    %b Страна:
+    = @estate.country  
+  %p      
+    %b Описание:
+    = @estate.title
+  %p 
+    %b Город:
+    = @estate.city
+  %p 
+    %b Район:
+    = @estate.district
+  %p   
+    %b Улица:
+    = @estate.street
+  %p 
+    %b Дом:
+    = @estate.house
+  %p 
+    %b Квартира: 
+    = @estate.flat    
+  %p 
+    %b Площадь,м2:
+    = @estate.area 
+  %p 
+    %b Цена, $: 
+    = @estate.price
+
+
+  = link_to "вернуться", :back   
+  -if user_signed_in? && @estate.user_id == current_user.id 
+    %hr
+    %p  
+      = link_to "Редактировать", edit_estate_path(@estate.id)   
+      #link_to_delete
+        = link_to "Удалить",{controller: :estates, action: :destroy, id: @estate.id, user_id: current_user.id}, method: :delete, data:{confirm:"Удалить объявление?"}

@@ -1,0 +1,11 @@
+-if params[:q]
+  %h2.subheader Результаты поиска
+  #results
+    Найдено: #{@estates.count}
+- else  
+  %h2.subheader#s Все объявления
+  #f
+/ = content_tag "div", id: "e", data: {countries: @countries, cities: @cities} do
+/   Load
+#estates    
+  = render "estates"  
