@@ -1,28 +1,14 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Чтобы гем rails4_autocomplete правильно работал, необходимо в файле .rvm/gems/ruby/gems/rails4_autocomplete-1.1.1/lib/rails4_autocomlete/autocomplete.rb заменить код метода json_for_autocomplete следующим кодом
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+	def json_for_autocomplete(items, method, extra_data)
+          json = items.collect do |item|
+	    hash = {"label" => item.send(method), "value" => item.send(method)}
+	    extra_data.each do |datum|
+	      hash[datum] = item.send(datum)
+	    end if extra_data
+	    hash
+	  end
+	  json.uniq
+	end 
