@@ -19,32 +19,13 @@
 
 $(function(){ $(document).foundation(); });
 
-// $(function(){
-// 	var countries = $("#e").data("countries")
-// 	var cities = $("#e").data("cities")
-
-
-// 	var arrayLength = countries.length;
-
-// 	    $("#country").change(function() {
-// 		        var val = $(this).find(":selected").text();
-//                 	alert(jQuery.inArray( val, countries ) )
-
-// 		})
-
-
-        
-  
-// })
-
 $(document).on("click", ".pagination a", function(e){
     e.preventDefault();
     $.getScript(this.href);
 });
 
 $(function(){
-	$("#searchForm input, #inputForm input").keyup(function(){
-		
-        $(this).val($(this).val().toLowerCase());
-	})
+    $("#searchForm input, #inputForm input").keyup(function(){
+       $(this).val($(this).val().toLowerCase());
+    })
 })
